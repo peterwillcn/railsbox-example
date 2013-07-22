@@ -193,7 +193,7 @@ common: &common
  
 development:
     <<: *common
-    database: appname__production
+    database: appname_production
  
 test:
     <<: *common
@@ -227,6 +227,8 @@ production:
 
 	deploy@vagrant-ubuntu-precise-64:~$ sudo /etc/init.d/postgresql reload
 	 * Reloading PostgreSQL 9.1 database server                              [ OK ]
+	 
+也可以找到:`railsbox-example\cookbooks\postgresql\templates\default\`目录下面的`pg_hba.conf.erb`文件，cook前修改好。
 
 ### 添加Github的knowhosts
 
@@ -281,7 +283,7 @@ production:
 
 ### FATAL:  Peer authentication failed for user "psyapp"
 
-postgresql的问题，请记得修改相应配置。如果你不愿意使用官方的postgresql安装模块，也可以找到:`railsbox-example\cookbooks\postgresql\templates\default\`目录下面的`pg_hba.conf.erb`文件，事先修改好。
+postgresql的问题，请记得修改相应配置，从peer改为md5。
 
 ## Author
 
