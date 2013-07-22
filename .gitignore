@@ -28,5 +28,5 @@ Gemfile.lock
 /cookbooks
 /cookbooks/*/
 /cookbooks/
-/nodes/*.json
+/nodes/33.33.33.10.json
 

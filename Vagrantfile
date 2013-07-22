@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   # doesn't already exist on the user's system.
   
   # config.vm.box_url = "https://www.dropbox.com/s/jgpdtomcgpshd4s/precise-server-cloudimg-amd64-vagrant-disk1.box"
-  config.vm.box_url = "/Users/ouyang/Dropbox/dev/vagrant/box/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box_url = "/users/ouyang/dev/vagrant/box/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -24,7 +24,6 @@ Vagrant.configure("2") do |config|
   # using a specific IP.
   # config.vm.network :private_network, ip: "192.168.33.10"
   config.vm.network :private_network, ip: "33.33.33.10"
-  config.vm.hostname = "attention.psyapp.org"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

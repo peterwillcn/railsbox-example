@@ -13,7 +13,6 @@
 
 以下以vagrant为例，示范如何使用：
 
-
 ## 必备
 
 * 下载并安装[Vagrant](http://www.vagrantup.com/)
@@ -45,9 +44,15 @@
 
 注意其中的：
 
-* `nconfig.vm.network :private_network, ip: "33.33.33.10"`
+* `config.vm.network :private_network, ip: "33.33.33.10"`
 
 如果修改了ip，请修改对应`33.33.33.10.json`的文件名。
+
+如果你的网速较慢，将我共享在[Dropbox的box文件](https://www.dropbox.com/s/jgpdtomcgpshd4s/precise-server-cloudimg-amd64-vagrant-disk1.box)下载到本地.
+
+然后设置为本地路径，这样未来销毁与开新主机速度快：
+
+	config.vm.box_url = "/users/ouyang/dev/vagrant/box/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
 
 ### 设置host.json文件
@@ -58,9 +63,9 @@
 
 根据提示，依次修改相应配置信息。
 
-* appbox部分填写本机的~/.ssh/id_rsa.pub的值，用于自动免密码登陆主机
+* appbox部分填写本机的~/.ssh/id_rsa.pub的值，用于自动免密码登陆主机。在shell中执行`cat ~/.ssh/id_rsa.pub`获得。
 * railsbox填写数据库、app等值
-* github_deploys填写github等值，用于将主机的ssh键值自动上传给github
+* github_deploys填写github等值，用于将主机的ssh键值自动上传给github。
 
 更多配置信息，参考：[ouyangzhiping/railsbox](https://github.com/ouyangzhiping/railsbox)
 
@@ -78,9 +83,9 @@
 
 初始化主机，给`33.33.33.10`这台主机安装chef。
 
-	knife solo prepare vagrant@33.33.33.10
+	bundle exec knife solo prepare vagrant@33.33.33.10
 
-根据网速，需要花费二三分钟不等。你可以去喝杯茶，然后慢慢来。
+提示输入服务器密码。咱们使用的是vagrant，默认密码是：`vagant`，输入即可。根据网速，需要花费二三分钟不等。你可以去喝杯茶，然后慢慢来。
 
 安装成功，提示：
 
@@ -104,7 +109,7 @@
 
 	knife solo cook vagrant@33.33.33.10
 
-继续喝茶，根据网速不等，需要花费十分钟到半个小时不等。
+继续喝茶，根据网速不等，需要花费十分钟到半个小时不等。让机器干活才是爽。
 
 
 ## 测试是否成功
