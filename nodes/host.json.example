@@ -1,0 +1,42 @@
+{
+  "run_list":[
+    "railsbox"
+  ],
+  "appbox": {
+    "deploy_keys": ["ssh-rsa, 1. run cat ~/.ssh/id_rsa.pub on your mac 2. copy it"],
+    "admin_keys": ["ssh-rsa, 1. run cat ~/.ssh/id_rsa.pub on your mac 2. copy it"]
+  },
+  "railsbox": {
+    "db_root_password": "welcome!",
+    "databases": {
+      "postgresql": [
+        { "username": "psyapp",
+          "password": "psqlpassword",
+          "database_name": "appname_production" }
+      ]
+    },
+    "ruby": {
+      "versions": ["2.0.0-p247", "2.0.0-p247"],
+      "global_version": "2.0.0-p247"
+    },
+    "apps": {
+      "unicorn": [
+        { "appname": "railsbox-example-app1",
+          "hostname": "33.33.33.10"
+        }
+      ]
+    }
+  },
+    "github_deploys": {
+    "deploy_user": "deploy",
+    "github_api": {
+      "username": "set your github username",
+      "email": "set your github user email",
+      "password": "set your github password"
+    }
+  },
+  "nginx":
+{
+  "version": "1.5.2"
+}
+}
