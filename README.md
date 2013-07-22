@@ -109,7 +109,18 @@
 
 	knife solo cook vagrant@33.33.33.10
 
-继续喝茶，根据网速不等，需要花费十分钟到半个小时不等。让机器干活才是爽。
+继续喝茶，根据网速不等，需要花费十分钟到半个小时不等。让机器干活才是爽。我们可以看到，机器帮我们完成了111次重启、注册新用户、安装软件等操作。
+
+	Recipe: nginx::source
+	  * service[nginx] action reload (up to date)
+	  * service[nginx] action restart
+	    - restart service service[nginx]
+
+	Recipe: railsbox::unicorn
+	  * runit_service[railsbox-example-app1] action restart
+	    - restart service runit_service[railsbox-example-app1]
+
+	Chef Client finished, 111 resources updated
 
 
 ## 测试是否成功
@@ -118,7 +129,7 @@
 
 	ssh deploy@33.33.33.10
 
-此时，应能免登陆，登陆主机。查看各个组建的版本，例如：
+此时，应能免密码，登陆成功主机33.33.33.10。查看各个组建的版本，例如：
 
 * ruby -v
 * rbenv -v
@@ -145,8 +156,14 @@
 
 初始化分发：
 
-	cap deploy:setup
+	bundle exec cap deploy:setup
 
+	提示成功：
+	
+	* executing "chmod g+w /home/apps/railsbox-example-app1 /home/apps/railsbox-example-app1/releases /home/apps/railsbox-example-app1/shared /home/apps/railsbox-example-app1/shared/system /home/apps/railsbox-example-app1/shared/log /home/apps/railsbox-example-app1/shared/pids"
+	  servers: ["33.33.33.10"]
+	  [33.33.33.10] executing command
+	  command finished in 60ms
 
 ## 服务器上的一些小准备
 
@@ -158,64 +175,89 @@
 
 开发与分发时，密码文件一般不能置入版本管理系统，因此，我们需要首先创建一个数据库密码文件。
 
-仍然是： `ssh deploy#33.33.33.10`，登陆系统 
-
-运行：
+仍然是： `ssh deploy@33.33.33.10`，登陆系统: 
 
 	ssh deploy@33.33.33.10
-	cd /home/apps/railsbox-example-app1/shared/config
+	cd /home/apps/railsbox-example-app1/shared #注意与你之前的host.json文件中的appname对应
 	mkdir config
 	vi config/database.yml.production
 
 内容填入：
 
-
-	common: &common
-	    adapter: postgresql
-	    username: psyapp
-	    password: psqlpassword
-	    #host: 33.33.33.10
-	 
-	development:
-	    <<: *common
-	    database: appname__production
-	 
-	test:
-	    <<: *common
-	    database: appname_production
-	 
-	production:
-	    <<: *common
-	    database: appname_production
-
+```
+common: &common
+    adapter: postgresql
+    username: psyapp
+    password: psqlpassword
+    #host: 33.33.33.10
+ 
+development:
+    <<: *common
+    database: appname__production
+ 
+test:
+    <<: *common
+    database: appname_production
+ 
+production:
+    <<: *common
+    database: appname_production
+```
 `:wq 
-`保存文件退出。
+`保存文件退出。此处请特别检查，复制内容是否齐全！尤其开头与结尾！
 
 ### 修改数据库
 
 为了避免出现`FATAL: Peer authentication failed for user`的postgresql数据库报错信息。
 
-	sudo nano /etc/postgresql/9.1/main/pg_hba.conf
-
+	sudo nano /etc/postgresql/9.1/main/pg_hba.conf  #注意你安装的postgresql版本号！是9.1还是9.2
 
 将其中的`peer` 改为 `md5`。
+
+	# "local" is for Unix domain socket connections only
+	local   all             all                                     peer
+
+改为：
+
+	# "local" is for Unix domain socket connections only
+	local   all             all                                     md5
+
+
+然后运行`sudo /etc/init.d/postgresql reload`重启postgresql。
+
+	deploy@vagrant-ubuntu-precise-64:~$ sudo /etc/init.d/postgresql reload
+	 * Reloading PostgreSQL 9.1 database server                              [ OK ]
 
 ### 添加Github的knowhosts
 
 使用：ssh -T git@github.com
 
-提示，是否添加，选择`yes`。
+提示，是否添加，选择`yes`。提示：
+
+	Warning: Permanently added 'github.com,204.232.175.90' (RSA) to the list of known hosts.
 
 以上操作均在`33.33.33.10`上的shell执行。
 
 ## 正式分发
 
-部署数据库与种子文件
-
-在mac上的shell执行。
+在mac上的shell执行。回到`railsbox-example-app1`目录下面。部署数据库与种子文件
 
 	bundle exec cap deploy:migrations
-	
+
+嗯，我们发现，机器又在吭哧吭哧帮我们干活了！心情很爽，离开几分钟，喝今天的第三杯茶去！
+
+	** [out :: 33.33.33.10]
+	** [out :: 33.33.33.10] Installing sprockets (2.10.0)
+	** [out :: 33.33.33.10]
+	** [out :: 33.33.33.10] Installing sprockets-rails (2.0.0)
+	** [out :: 33.33.33.10]
+	** [out :: 33.33.33.10] Installing rails (4.0.0)
+	** [out :: 33.33.33.10]
+	** [out :: 33.33.33.10] Installing rdoc (3.12.2)
+	** [out :: 33.33.33.10]
+	** [out :: 33.33.33.10] Installing sass (3.2.9)
+	** [out :: 33.33.33.10]	
+
 一切完成！
 
 打开浏览器：`http://33.33.33.10`，我们即看到一个漂亮的rails应用，它还是完全基于rbenv+nginx+unicorn的！
@@ -231,6 +273,15 @@
 	vi ~/.ssh/known_hosts
 	按 `esc`退出，再按`dG`，清除掉known_hosts里的内容
 	按`:wq`保存
+
+### your Gemfile.lock into version control before deploying
+
+记得在`.gitignore`中去掉对`gemfile.lock`文件的屏蔽。将其注释掉。
+
+
+### FATAL:  Peer authentication failed for user "psyapp"
+
+postgresql的问题，请记得修改相应配置。如果你不愿意使用官方的postgresql安装模块，也可以找到:`railsbox-example\cookbooks\postgresql\templates\default\`目录下面的`pg_hba.conf.erb`文件，事先修改好。
 
 ## Author
 
