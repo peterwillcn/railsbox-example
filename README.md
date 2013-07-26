@@ -240,7 +240,12 @@ production:
 
 使用：ssh -T git@github.com
 
-提示，是否添加，选择`yes`。提示：
+提示，是否添加，
+
+   RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+   Are you sure you want to continue connecting (yes/no)?
+
+选择`yes`。提示：
 
 	Warning: Permanently added 'github.com,204.232.175.90' (RSA) to the list of known hosts.
 
