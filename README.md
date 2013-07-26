@@ -2,6 +2,8 @@
 
 ## 说明
 
+如果你需要一键部署，从零装机，自动分发Rails应用，那么，[Railsbox](https://github.com/ouyangzhiping/railsbox)就是你所需要的。
+
 [Railsbox](https://github.com/ouyangzhiping/railsbox)是一个整合了多个cookbook与Ruby社区部署最佳实践的项目，它已测试实现：
 
 * 默认基于ruby2.0+rben+nginx+unicorn
@@ -10,6 +12,10 @@
 * 自动上传github 密钥
 * 无密码deploy等登陆
 * postgresql作为数据库
+* 已测试Vagrant、阿里云、Ucloud与linode。
+
+
+特别提醒：必须先给国内的云主机翻个墙，才能正常安装。ubuntu Server如何翻墙，敬请参考[ubuntu server版连接vpn服务器](http://blog.feeidc.com/2013/05/580.html)。
 
 以下以vagrant为例，示范如何使用：
 
