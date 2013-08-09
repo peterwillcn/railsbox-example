@@ -6,7 +6,7 @@
 
 [Railsbox](https://github.com/ouyangzhiping/railsbox)是一个整合了多个cookbook与Ruby社区部署最佳实践的项目，它已测试实现：
 
-* 默认基于ruby2.0+rben+nginx+unicorn
+* 默认基于ruby2.0+rbenv+nginx+unicorn
 * 实现在linode vps、阿里云与vagrant上的一键部署
 * 无缝重启的nginx作为前端，unicorn作为后端的Rails最佳部署方案
 * 自动上传github 密钥
