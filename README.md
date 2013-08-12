@@ -242,7 +242,7 @@ production:
 
 提示，是否添加，
 
-   RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+   RSA key fingerprint is ac:a5:76:28:2d
    Are you sure you want to continue connecting (yes/no)?
 
 选择`yes`。提示：
@@ -260,13 +260,7 @@ production:
 嗯，我们发现，机器又在吭哧吭哧帮我们干活了！心情很爽，离开几分钟，喝今天的第三杯茶去！
 
 	** [out :: 33.33.33.10]
-	** [out :: 33.33.33.10] Installing sprockets (2.10.0)
-	** [out :: 33.33.33.10]
-	** [out :: 33.33.33.10] Installing sprockets-rails (2.0.0)
-	** [out :: 33.33.33.10]
 	** [out :: 33.33.33.10] Installing rails (4.0.0)
-	** [out :: 33.33.33.10]
-	** [out :: 33.33.33.10] Installing rdoc (3.12.2)
 	** [out :: 33.33.33.10]
 	** [out :: 33.33.33.10] Installing sass (3.2.9)
 	** [out :: 33.33.33.10]	
