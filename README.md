@@ -8,11 +8,11 @@
 
 * 默认基于ruby2.0+rbenv+nginx+unicorn
 * 实现在linode vps、阿里云与vagrant上的一键部署
-* 无缝重启的nginx作为前端，unicorn作为后端的Rails最佳部署方案
+* nginx作为前端，unicorn作为后端的Rails最佳部署方案
 * 自动上传github 密钥
 * 无密码deploy等登陆
 * postgresql作为数据库
-* 已测试Vagrant、阿里云、Ucloud与linode。
+* 已测试Vagrant、阿里云、Ucloud与linode vps。
 
 
 特别提醒：必须先给国内的云主机翻个墙，才能正常安装。ubuntu Server如何翻墙，敬请参考[ubuntu server版连接vpn服务器](http://blog.feeidc.com/2013/05/580.html)。
